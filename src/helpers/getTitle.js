@@ -34,7 +34,7 @@ export default async function getTitle(id) {
     review_api_path: `/reviews/${id}`,
     imdb: `https://www.imdb.com/title/${id}`,
     contentType: props.aboveTheFoldData.titleType.id,
-    contentRating: props.aboveTheFoldData?.certificate?.rating ?? "N/A",
+    contentRating: props.aboveTheFoldData?.certificate?.rating ?? null,
     isSeries: props.aboveTheFoldData.titleType.isSeries,
     productionStatus:
       props.aboveTheFoldData.productionStatus.currentProductionStage.id,
@@ -46,7 +46,7 @@ export default async function getTitle(id) {
     images: props.mainColumnData.titleMainImages.edges
       .filter((e) => e.__typename === "ImageEdge")
       .map((e) => e.node.url),
-    plot: props.aboveTheFoldData.plot.plotText.plainText,
+    plot: props.aboveTheFoldData.plot?.plotText?.plainText ?? null,
     runtime:
       props.aboveTheFoldData.runtime?.displayableProperty?.value?.plainText ??
       "",
