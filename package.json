@@ -9,13 +9,15 @@
     "publish": "wrangler deploy src/index.js",
     "test": "jest",
     "start": "wrangler dev src/index.js --port 3000",
-    "bump": "node scripts/bump-version.js"
+    "bump": "node scripts/bump-version.js",
+    "format": "prettier --write ./src"
   },
   "author": "tuhinpal <me@thetuhin.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "axios": "^0.27.2",
     "jest": "^28.1.0",
+    "prettier": "^3.3.2",
     "wrangler": "^3.3.0"
   },
   "dependencies": {

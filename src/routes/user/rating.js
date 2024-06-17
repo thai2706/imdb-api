@@ -40,7 +40,7 @@ export default async function userRating(c) {
       throw new Error(
         errorStatus === 404
           ? "Seems like user rating is not exixts."
-          : "Error fetching user rating."
+          : "Error fetching user rating.",
       );
     }
 
@@ -59,7 +59,7 @@ export default async function userRating(c) {
 
     try {
       const totalFilteredRatings = dom.getElementById(
-        "lister-header-current-size"
+        "lister-header-current-size",
       ).textContent;
       total_filtered_ratings = parseInt(totalFilteredRatings);
     } catch (_) {}
@@ -113,7 +113,7 @@ async function parseReviews(userId) {
   try {
     let data = [];
     const rawHtml = await apiRequestRawHtml(
-      `https://www.imdb.com/user/${userId}/reviews`
+      `https://www.imdb.com/user/${userId}/reviews`,
     );
 
     const parser = new DomParser();
@@ -173,10 +173,10 @@ function parseContent(node) {
     object.title = title.textContent.trim();
 
     const userRatingNode = node.getElementsByClassName(
-      "ipl-rating-star--other-user"
+      "ipl-rating-star--other-user",
     )[0];
     const userRating = userRatingNode.getElementsByClassName(
-      "ipl-rating-star__rating"
+      "ipl-rating-star__rating",
     )[0];
 
     object.userRating = parseInt(userRating.textContent.trim());
@@ -213,7 +213,7 @@ function parseContent(node) {
 
     try {
       const allUserRating = node.getElementsByClassName(
-        "ipl-rating-star__rating"
+        "ipl-rating-star__rating",
       )[0];
 
       let votes = -1;

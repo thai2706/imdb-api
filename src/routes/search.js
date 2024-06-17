@@ -9,7 +9,7 @@ search.get("/", async (c) => {
     if (!query) throw new Error("Query param is required");
 
     let data = await apiRequestJson(
-      `https://v3.sg.media-imdb.com/suggestion/x/${query}.json?includeVideos=0`
+      `https://v3.sg.media-imdb.com/suggestion/x/${query}.json?includeVideos=0`,
     );
 
     let response = {
@@ -36,7 +36,7 @@ search.get("/", async (c) => {
 
             imageObj.image = node.i.imageUrl.replace(
               /[.]_.*_[.]/,
-              `._V1_UY396_CR6,0,${width},396_AL_.`
+              `._V1_UY396_CR6,0,${width},396_AL_.`,
             );
           } catch (_) {
             imageObj.image = imageObj.image_large;

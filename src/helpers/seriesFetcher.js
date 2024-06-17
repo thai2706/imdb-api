@@ -1,7 +1,7 @@
 import DomParser from "dom-parser";
 import apiRequestRawHtml from "./apiRequestRawHtml";
 
-export default async function seriesFetcher(id) {
+export default async function seriesFetcher(id, language = "en-US") {
   try {
     const firstSeason = await getSeason({ id, seasonId: 1 });
 
@@ -22,10 +22,8 @@ export default async function seriesFetcher(id) {
   }
 }
 
-export async function getSeason({ id, seasonId }) {
-  const html = await apiRequestRawHtml(
-    `https://www.imdb.com/title/${id}/episodes?season=${seasonId}`
-  );
+export async function getSeason({ id, seasonId, language = "en-US" }) {
+  const html = await apiRequestRawHtml(`https://www.imdb.com/title/${id}/episodes?season=${seasonId}`, language);
 
   let parser = new DomParser();
   let dom = parser.parseFromString(html);
@@ -47,11 +45,7 @@ export async function getSeason({ id, seasonId }) {
         image_large: e.image.url,
         image_caption: e.image.caption,
         plot: e.plot,
-        publishedDate: new Date(
-          e.releaseDate.year,
-          e.releaseDate.month - 1,
-          e.releaseDate.day
-        ).toISOString(),
+        publishedDate: new Date(e.releaseDate.year, e.releaseDate.month - 1, e.releaseDate.day).toISOString(),
         rating: {
           count: e.voteCount,
           star: e.aggregateRating,

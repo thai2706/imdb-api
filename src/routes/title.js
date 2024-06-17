@@ -6,9 +6,10 @@ const title = new Hono();
 
 title.get("/:id", async (c) => {
   const id = c.req.param("id");
+  const language = c.req.query("language");
 
   try {
-    const result = await getTitle(id);
+    const result = await getTitle(id, language);
 
     return c.json(result);
   } catch (error) {
@@ -22,9 +23,10 @@ title.get("/:id", async (c) => {
 title.get("/:id/season/:seasonId", async (c) => {
   const id = c.req.param("id");
   const seasonId = c.req.param("seasonId");
+  const language = c.req.query("language");
 
   try {
-    const result = await getSeason({ id, seasonId });
+    const result = await getSeason({ id, seasonId, language });
 
     const response = Object.assign(
       {
@@ -33,7 +35,7 @@ title.get("/:id/season/:seasonId", async (c) => {
         imdb: `https://www.imdb.com/title/${id}/episodes?season=${seasonId}`,
         season_id: seasonId,
       },
-      result
+      result,
     );
 
     return c.json(response);

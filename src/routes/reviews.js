@@ -10,7 +10,7 @@ reviews.get("/:id", async (c) => {
     let option = optionsMapper[0];
     try {
       let getOption = optionsMapper.find(
-        (option) => option.name === c.req.query("option")
+        (option) => option.name === c.req.query("option"),
       );
       if (getOption) option = getOption;
     } catch (_) {}
@@ -24,7 +24,7 @@ reviews.get("/:id", async (c) => {
     let rawHtml = await apiRequestRawHtml(
       `https://www.imdb.com/title/${id}/reviews/_ajax?sort=${
         option.key
-      }&dir=${sortOrder}${nextKey ? `&paginationKey=${nextKey}` : ""}`
+      }&dir=${sortOrder}${nextKey ? `&paginationKey=${nextKey}` : ""}`,
     );
     let dom = parser.parseFromString(rawHtml);
 

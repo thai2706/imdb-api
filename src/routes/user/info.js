@@ -19,7 +19,7 @@ export default async function userInfo(c) {
       throw new Error(
         errorStatus === 404
           ? "Seems like user is not exixts."
-          : "Error fetching user info."
+          : "Error fetching user info.",
       );
     }
 
@@ -38,7 +38,7 @@ export default async function userInfo(c) {
 
     try {
       const created = rawHtml.match(
-        /<div class="timestamp">IMDb member since (.*)<\/div>/
+        /<div class="timestamp">IMDb member since (.*)<\/div>/,
       )[1];
       data.member_since = created || null;
     } catch (__) {
@@ -82,7 +82,7 @@ export default async function userInfo(c) {
         imdb: `https://www.imdb.com/user/${userId}`,
         ratings_api_path: `/user/${userId}/ratings`,
       },
-      data
+      data,
     );
 
     return c.json(result);

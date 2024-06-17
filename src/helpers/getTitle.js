@@ -2,9 +2,12 @@ import apiRequestRawHtml from "./apiRequestRawHtml";
 import DomParser from "dom-parser";
 import seriesFetcher from "./seriesFetcher";
 
-export default async function getTitle(id) {
+export default async function getTitle(id, language = "en-US") {
   const parser = new DomParser();
-  const html = await apiRequestRawHtml(`https://www.imdb.com/title/${id}`);
+  const html = await apiRequestRawHtml(
+    `https://www.imdb.com/title/${id}`,
+    language,
+  );
   const dom = parser.parseFromString(html);
   const nextData = dom.getElementsByAttribute("id", "__NEXT_DATA__");
   const json = JSON.parse(nextData[0].textContent);
@@ -13,7 +16,7 @@ export default async function getTitle(id) {
 
   const getCredits = (lookFor, v) => {
     const result = props.aboveTheFoldData.principalCredits.find(
-      (e) => e?.category?.id === lookFor
+      (e) => e?.category?.id === lookFor,
     );
 
     return result
@@ -64,7 +67,7 @@ export default async function getTitle(id) {
       date: new Date(
         props.aboveTheFoldData.releaseDate.year,
         props.aboveTheFoldData.releaseDate.month - 1,
-        props.aboveTheFoldData.releaseDate.day
+        props.aboveTheFoldData.releaseDate.day,
       ).toISOString(),
       day: props.aboveTheFoldData.releaseDate.day,
       month: props.aboveTheFoldData.releaseDate.month,
@@ -77,7 +80,7 @@ export default async function getTitle(id) {
         (e) => ({
           country: e.text,
           cca2: e.id,
-        })
+        }),
       ),
     },
     year: props.aboveTheFoldData.releaseDate.year,
@@ -85,10 +88,10 @@ export default async function getTitle(id) {
       (e) => ({
         language: e.text,
         id: e.id,
-      })
+      }),
     ),
     filmingLocations: props.mainColumnData.filmingLocations.edges.map(
-      (e) => e.node.text
+      (e) => e.node.text,
     ),
     actors: getCredits("cast"),
     actors_v2: getCredits("cast", "2"),
